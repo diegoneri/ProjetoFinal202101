@@ -7,12 +7,11 @@ namespace ProjetoFinal202101
         static void Main(string[] args)
         {
             string opcao;
-            double numeroUm, numeroDois, resultado;
 
             do
             {
                 exibeMenu();
-                opcao = Console.ReadLine().ToUpper();
+                opcao = Console.ReadLine().Trim().ToUpper();
 
                 switch (opcao)
                 {
@@ -24,6 +23,18 @@ namespace ProjetoFinal202101
                         break;
                     case "B":
                         calculaSubtracao();
+                        break;
+                    case "M":
+                        calculaProduto();
+                        break;
+                    case "D":
+                        calculaDivisao();
+                        break;
+                    case "E":
+                        calculaExponenciacao();
+                        break;
+                    case "R":
+                        calculaRadiciacao();
                         break;
                     case "X":
                         Console.WriteLine("Obrigado por utilizar nosso programa!");
@@ -64,12 +75,12 @@ namespace ProjetoFinal202101
             Console.WriteLine("|          Soma           |");
             Console.WriteLine("---------------------------");
 
-            numeroUm = digitaNumero("primeiro");
-            numeroDois = digitaNumero("segundo");
+            numeroUm = digitaNumeroOrdenado("primeiro");
+            numeroDois = digitaNumeroOrdenado("segundo");
 
             resultado = numeroUm + numeroDois;
 
-            Console.WriteLine($"A soma de {numeroUm} + {numeroDois} é igual a {resultado}");
+            Console.WriteLine($"A soma de {numeroUm} + {numeroDois} é igual a {resultado:N2}");
         }
 
         static void calculaSubtracao()
@@ -79,21 +90,101 @@ namespace ProjetoFinal202101
             Console.WriteLine("|       Subtração         |");
             Console.WriteLine("---------------------------");
 
-            numeroUm = digitaNumero("primeiro");
-            numeroDois = digitaNumero("segundo");
+            numeroUm = digitaNumeroOrdenado("primeiro");
+            numeroDois = digitaNumeroOrdenado("segundo");
 
             resultado = numeroUm - numeroDois;
 
             Console.WriteLine($"A subtração de {numeroUm} - {numeroDois} é igual a {resultado}");
         }
 
-        static double digitaNumero(string ordem)
+        static void calculaProduto()
+        {
+            double numeroUm, numeroDois, resultado;
+            Console.WriteLine("---------------------------");
+            Console.WriteLine("|      Multiplicação      |");
+            Console.WriteLine("---------------------------");
+
+            numeroUm = digitaNumeroOrdenado("primeiro");
+            numeroDois = digitaNumeroOrdenado("segundo");
+
+            resultado = numeroUm * numeroDois;
+
+            Console.WriteLine($"O produto de {numeroUm} x {numeroDois} é igual a {resultado:N2}");
+        }
+
+        static void calculaDivisao()
+        {
+            double numeroUm, numeroDois, resultado;
+            Console.WriteLine("---------------------------");
+            Console.WriteLine("|         Divisão         |");
+            Console.WriteLine("---------------------------");
+
+            numeroUm = digitaNumeroOrdenado("primeiro");
+            numeroDois = digitaNumeroOrdenado("segundo");
+
+            if (numeroDois == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("Não é possível a divisão por zero!");
+                Console.ResetColor();
+            }
+            else
+            {
+                resultado = numeroUm / numeroDois;
+                Console.WriteLine($"A divisão de {numeroUm} / {numeroDois} é igual a {resultado:N2}");
+            }
+        }
+
+        static void calculaExponenciacao()
+        {
+            double @base, potencia, resultado;
+            Console.WriteLine("---------------------------");
+            Console.WriteLine("|     Exponenciação       |");
+            Console.WriteLine("---------------------------");
+
+            @base = digitaNumero("Digite a base: ");
+            potencia = digitaNumero("Digite a potência: ");
+
+            resultado = Math.Pow(@base, potencia);
+
+            Console.WriteLine($"A potência de {@base} elevado a {potencia} é igual a {resultado:N2}");
+        }
+
+        static void calculaRadiciacao()
+        {
+            double numero, resultado;
+            Console.WriteLine("---------------------------");
+            Console.WriteLine("|        Radiciação       |");
+            Console.WriteLine("---------------------------");
+
+            numero = digitaNumero("Digite um número: ");
+
+            if (numero < 0)
+            {
+                Console.WriteLine("Não existem raízes de números negativos!");
+            }
+            else
+            {
+                resultado = Math.Sqrt(numero);
+                Console.WriteLine($"A raiz de {numero} é igual a {resultado:N2}");
+            }
+        }
+
+        static double digitaNumero(string mensagem)
         {
             double numero = 0;
-            Console.Write($"Digite o {ordem} número: ");
+            Console.Write(mensagem);
             Double.TryParse(Console.ReadLine(), out numero);
             return numero;
         }
+
+        static double digitaNumeroOrdenado(string ordem)
+        {
+            return digitaNumero($"Digite o {ordem} número");
+        }
+
+
 
     }
 }
